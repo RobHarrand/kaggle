@@ -1,0 +1,116 @@
+library('ggplot2')
+library('animation')
+library(geosphere)
+
+bat1 = 'pair23_indA'
+bat2 = 'pair23_indB'
+
+dt = read.csv("Movement coordination in trawling bats (data from Giuggioli et al. 2015).csv")
+
+dt_sub = dt[dt$tag.local.identifier ==  bat1| dt$tag.local.identifier == bat2,]
+
+dt_sub = dt_sub[order(dt_sub$timestamp),]
+dt_sub$timestamp = as.POSIXct(dt_sub$timestamp, format = )
+
+min_lat <- min(dt_sub$location.lat)
+max_lat <- max(dt_sub$location.lat)
+min_long <- min(dt_sub$location.long)
+max_long <- max(dt_sub$location.long)
+
+l = length(dt_sub$event.id)
+#i = 1
+
+# saveGIF(while (i <= l) {
+#   
+#   print(m <- ggplot(data=dt_sub[1:i,],aes(location.long[1:i],location.lat[1:i])) + 
+#           geom_point(size=2, color=I(dt_sub$tag.local.identifier[1:i]), alpha = 1) +
+#           scale_x_continuous(limits=c(min_long, max_long)) +
+#           scale_y_continuous(limits=c(min_lat, max_lat)) +
+#           theme(panel.background = element_rect(fill = "white"),
+#                 panel.grid.major = element_blank(),
+#                 panel.grid.minor = element_blank()) +
+#           annotate("text", x =-2.66310, y=51.40704, label = dt_sub$timestamp[i], colour = 'black', size = 8))
+#   
+#   i = i+1
+#   
+# }, movie.name = "bats.gif", interval = 0.1, convert = "convert", ani.width = 800, 
+# ani.height = 800)
+
+
+dt_sub$grp = 1
+
+dt_sub$grp[dt_sub$individual.local.identifier == bat1] = seq(1:length(dt_sub$event.id[dt_sub$individual.local.identifier == bat1]))
+dt_sub$grp[dt_sub$individual.local.identifier == bat2] = seq(1:length(dt_sub$event.id[dt_sub$individual.local.identifier == bat2]))
+
+dt_sub$Col = 'red'
+dt_sub$Col[dt_sub$individual.local.identifier == bat2] = 'blue'
+
+
+
+
+i=1
+d_temp = vector()
+
+while (i <= (length(dt_sub$grp)/2)) {
+
+  d_temp[i] = distm(c(dt_sub$location.long[dt_sub$individual.local.identifier == bat1 & dt_sub$grp == i],
+           dt_sub$location.lat[dt_sub$individual.local.identifier == bat1 & dt_sub$grp == i]),
+         c(dt_sub$location.long[dt_sub$individual.local.identifier == bat2 & dt_sub$grp == i],
+           dt_sub$location.lat[dt_sub$individual.local.identifier == bat2 & dt_sub$grp == i]), 
+         fun = distHaversine)
+ 
+  i=i+1
+   
+}
+
+d = d_temp
+d2 = vector()
+
+a=1
+b=1
+
+while (a<=length(d)*2) {
+
+  d2[a] = d[b]
+  a=a+1
+  d2[a] = d[b]
+  a=a+1
+  b=b+1
+    
+}
+
+range01 <- function(x){(d2-min(d2))/(max(d2)-min(d2))}
+d_range = range01(d2)
+
+x_pos = min_long + (max_long - min_long)*0.2
+y_pos = min_lat + (max_lat - min_lat)*0.1
+
+i=1
+
+saveGIF(while (i <= l) {
+  
+  time = dt_sub$timestamp[i]
+  time = as.character(time)
+  time = strsplit(time, "GMT")[[1]][1]
+  time = strsplit(time, ":")[[1]][3]
+  time = paste("Time: ", time, "s", sep = "")
+  distance = paste("Distance between bats: ", round(d2[i],2), "m", sep = "")
+  
+  print(m <- ggplot(data=dt_sub[1:i,],aes(location.long[1:i],location.lat[1:i], group = grp)) + 
+          geom_point(size=2, color=I(dt_sub$Col[1:i]), alpha = 1) +
+          scale_x_continuous(limits=c(min_long, max_long)) +
+          scale_y_continuous(limits=c(min_lat, max_lat)) +
+          geom_line(col = 'black', alpha = 1-d_range[1:i]) + 
+          theme(panel.background = element_rect(fill = "white"),
+                panel.grid.major = element_blank(),
+                panel.grid.minor = element_blank()) +
+          annotate("text", x =-2.66313, y=51.40694, label = "Flight of Pair 23", colour = 'black', size = 8) +
+          annotate("text", x =x_pos, y=y_pos, label = time, colour = 'black', size = 6) +
+          annotate("text", x =x_pos, y=y_pos-0.000004, label = distance, colour = 'black', size = 6))
+  
+  i = i+2
+  
+}, movie.name = "bats.gif", interval = 0.05, convert = "convert", ani.width = 800, 
+ani.height = 800)
+
+

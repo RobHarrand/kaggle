@@ -1,0 +1,18 @@
+{
+    "contents" : "library('ggplot2')\nlibrary('animation')\n\nufos = read.csv('scrubbed.csv', stringsAsFactors = F)\n\nufos$Date = sapply(strsplit(ufos$datetime, split = \" \"), function(x) x[[1]][1])\n\nufos$Date = as.Date(ufos$Date, format = \"%m/%d/%Y\")\n\nufos = ufos[!is.na(ufos$Date),]\n\nufos = ufos[order(ufos$Date),]\n\nufos$latitude = as.numeric(ufos$latitude)\n#ufos$Duration.s. = as.numeric(ufos)\n\nmin_lat <- min(ufos$latitude, na.rm = T)\nmax_lat <- max(ufos$latitude, na.rm = T)\nmin_long <- min(ufos$longitude)\nmax_long <- max(ufos$longitude)\n\n\n#Load the map data,\ns <- map_data(\"world\")\n\n#Set everywhere to green,\ns$colour = \"black\"\n\n#Change a few obvious ones,\ns$colour[s$region == \"Antarctica\"] = \"white\"\ns$colour[s$region == \"Greenland\"] = \"white\"\n# s$colour[s$region == \"Morocco\"] = \"orange\"\n# s$colour[s$region == \"Algeria\"] = \"orange\"\n# s$colour[s$region == \"Tunisia\"] = \"orange\"\n# s$colour[s$region == \"Libya\"] = \"orange\"\n# s$colour[s$region == \"Egypt\"] = \"orange\"\n# s$colour[s$region == \"Saudi Arabia\"] = \"orange\"\n# s$colour[s$region == \"Australia\"] = \"orange\"\n# s$colour[s$region == \"Mongolia\"] = \"orange\"\n\nx = densCols(ufos$latitude, ufos$longitude)\nufos$dens <- col2rgb(x)[1,] + 1L\ncols = colorRampPalette(c('red', 'yellow', 'blue'))(256)\nufos$col <- cols[ufos$dens]\n\n\n# Start the clock!\nptm <- proc.time()\n\n\n#Set a counter,\nl = length(ufos$datetime)\n\ni = 1\nj = 0\n\nsaveGIF(while (i <= l) {\n    \n    #Set the viewing position from the spline,        \n    orient_x = 40\n    orient_y = -150\n    \n    #Let's plot this beast!\n    print(\n        \n        m <- ggplot(data = s, aes(x=long, y=lat, group=group)) + #Set ggplot2\n            \n            geom_path(data = s, aes(x=long, y=lat), colour=\"black\") + #Plot the Earth\n            \n            geom_polygon(fill=s$colour, colour=\"black\") + #Colour the countries\n            \n            theme(panel.grid.major = element_line(colour = \"black\")) + #Make the grid-lines black\n            \n            coord_map(\"ortho\", orientation=c(orient_x,orient_y+j,0)) +\n        \n            geom_point(inherit.aes=FALSE, data = ufos[1:i,], size = 2, colour = ufos$col[1:i], aes(x=longitude[1:i], y=latitude[1:i]), alpha = 0.1) +\n        \n            annotate(\"text\", x =-100, y=-10, label = ufos$Date[i], colour = 'red', size = 10) + \n\n            annotate(\"text\", x =-100, y=-20, label = paste('No. of cases: ', i, sep = ''), colour = 'red', size = 8)\n    )\n    \n    i = i+800\n    j=j+0.3\n    \n}, movie.name = \"UFO3D.gif\", interval = 0.1, convert = \"convert\", ani.width = 800, \nani.height = 800)\n\n\n\n# Stop the clock\nproc.time() - ptm\n\n\n",
+    "created" : 1479377627173.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "222077242",
+    "id" : "1B75339B",
+    "lastKnownWriteTime" : 1479821069,
+    "path" : "C:/Users/rob.harrand/Desktop/WORK/Kaggle/UFOs/ufos.R",
+    "project_path" : "ufos.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

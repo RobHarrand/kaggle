@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "require(plyr)\nrequire(maptools)\nrequire(maps)\nrequire(ggplot2)\nrequire(lubridate)\nrequire(animation)\n\ndt = read.csv(\"Outbreak_240817.csv\")\n\n#plot(dt$longitude, dt$latitude)\n\ndt$reportingDate = as.character(dt$reportingDate)\ndt$reportingDate = as.POSIXct(dt$reportingDate, format = \"%d/%m/%Y\")\n\ndt$Year = year(dt$reportingDate)\ndt$Month = month(dt$reportingDate)\n\n#temp = dt[dt$Year == 2016 & dt$Month == 6 & dt$country == 'Niger' & dt$disease == 'Influenza - Avian',]\n\nagg_country = aggregate(sumDeaths ~ disease + country + Year + Month, data = dt, mean)\nagg_country = agg_country[order(-agg_country$sumDeaths),]\n\n\n\nagg_country = aggregate(sumDeaths ~ disease, data = dt, mean)\nagg_country = agg_country[order(-agg_country$sumDeaths),]\n\npar(mar = c(20,4,0.5,4))\n\nbarplot(agg_country$sumDeaths, names.arg = agg_country$disease, las = 2)\n\n\n\n\nbird = dt[dt$disease == 'Influenza - Avian',]\nbird = bird[order(bird$reportingDate),]\n\n#Get a world map,\ndata(wrld_simpl)\n\npar(mar = c(0,0,1,0),\n    pin = c(4,2),\n    pty = \"m\",\n    xaxs = \"i\",\n    xaxt = 'n',\n    xpd = FALSE,\n    yaxs = \"i\",\n    yaxt = 'n')\n\nplot(wrld_simpl, col='green', bg='white', border='black', ann=FALSE, axes = FALSE, main = \"Disease Outbreaks\")\n\npoints(bird$longitude,bird$latitude, pch = 20, cex = 1, col='blue')\n\n\n#dev.off()\n\n\nbbox = cbind(c(179,179,-179,-179,179), c(89,-89,-89,89,89))\n\npar(mar = c(0,0,0,0),\n    pin = c(4,2),\n    pty = \"m\",\n    xaxs = \"i\",\n    xaxt = 'n',\n    xpd = FALSE,\n    yaxs = \"i\",\n    yaxt = 'n')\n#plot(wrld_simpl, col='grey', bg='white', border=NA, ann=FALSE, axes = FALSE)\n\n\n\ni=1\n\nsaveGIF(while (i <= length(bird$Id)) {\n  \n  plot(wrld_simpl, col='darkolivegreen2', bg='white', border='grey', ann=FALSE, axes = FALSE, main = \"Birdflu Outbreaks\")\n  \n  points(bird$longitude[1:i],bird$latitude[1:i], pch = 21, cex = 1, bg = 'red', col='black')\n  \n  text(-156.621094,-38.373819, paste(\"Date: \", bird$reportingDate[i]))\n  \n  i = i+60\n  \n}, movie.name = \"birdflu.gif\", interval = 0.25, convert = \"convert\", ani.width = 800, \nani.height = 800)\n\n\n\n\n\n\n\n",
+    "created" : 1503582509979.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4120269699",
+    "id" : "7CCE7D59",
+    "lastKnownWriteTime" : 1503587260,
+    "last_content_update" : 1503587260668,
+    "path" : "C:/Users/rob.harrand/Desktop/WORK/Data hobbies/Kaggle/My data submissions/Global disease outbreaks/outbreaks.R",
+    "project_path" : "outbreaks.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,99 @@
+1.0  Street People,1.1  Prostitute
+,     1.10 Female
+,     1.11 Male
+,1.2  Homeless
+,1.3  Junkies
+,1.4  Exotic dancers
+,1.5 Refugees/immigrants
+,1.6  Migrant workers
+,1.7 Cult followers
+2.0  Hitchhikers,
+3.0 Johns/Sexual encounters,3.1  Johns
+,3.2  Sexual encounters
+,       3.21  Straight
+,       3.22  Gay
+,3.3  Lonely hearts
+,3.4 Lovers
+,3.5 Former lovers
+,3.6  Met at a bar/party
+4.0  Patients/Wards,4.1  Hospital patients
+,4.2  Wards
+,4.3  Child care
+,4.4  Nursing homes
+,4.5  Home care patients
+,4.6 Late tern abortion
+,4.7  Boarders
+,
+5.0 Family,5.1  Spouse
+,5.2  Child
+,5.21 Newborn children
+,5.22 Step-child
+,5.3  Parents
+,5.4  Siblings
+,5.5  Grandparents
+,5.6  Other relatives
+,5.7 Girl/Boy friends
+,5.8  In-laws
+,5.9  Friends
+,5.91  Roommates
+6.0  Employees/Customers,6.1  Employees
+,6.11 Maids
+,6.12 Slaves/Peons
+,6.13 Coworkers
+,6.14  Job applicants
+,6.2  Customers
+,6.21 - Taxi passengers
+,6.22 Train passengers
+,6.3  Taxi drivers
+,6.31 Truckers
+,6.4  Police officers
+,6.41 Prison guards
+,6.45 Security Guards
+,6.5  Lodgers
+,6.6 Employer
+,6.65 Business Partner
+,6.7 Models
+,6.8 Judges
+,6.9 Military
+7.0  Home invasion,7.1  Men & Women
+,7.2  Women
+,7.3  Elderly
+,       7.31  Men & Women
+,       7.32  Women
+,       7.33  Men
+,7.11 Men
+,7.4  Acquaintences
+,7.5  Children
+8.0  Street,8.1  Neighbors
+,8.2  Tourists
+,8.3  General public
+,     8.31  Women
+,     8.32  Men
+,     8.33  Adults - men & women
+,     8.34  Children - girls
+,     8.35  Children - boys
+,     8.36  Children - boys & girls
+,     8.37  Women - Elderly
+,     8.38  Men & Women elderly
+,8.4  Couples
+,8.5  Acquaintences
+,8.52  Met at a party/bar
+,8.51  Witnesses
+,8.6  Gay men
+,8.7 Hikers
+,8.71 Campers
+,8.8 Hitchhikers
+,8.81 Picked up hitchhiker
+,8.9 Mentally retarded
+9.0,9.0  Convenience
+10.0  Criminals,10.1  Drug dealers
+,10.11  Drug customers
+,10.2 Pedophiles
+,10.3 Gang members
+,10.4  Inmates
+,10.41  Escaped inmates
+,10.5 Looters
+,10.6  Rival criminal gangs
+,10.7 Informants/witnesses
+,10.8 Prison inmates
+11.0 Multiple victim types,

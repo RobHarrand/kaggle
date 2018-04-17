@@ -1,0 +1,31 @@
+Kaggle Kernal - So, You've Run a Diagnostics Test
+-------------------------------------------------
+
+1) Opening anecdote ... test results from the GP
+2) Back to basics ... what is a diagnostics test?
+3) What are the stats of a diagnostic test? - Frequntist (sens, spec, NPV, PPV, ROC, survival analysis)
+4) What's wrong with this picture? (focus on sens or spec only, taking the result out of context, different types of biases)
+4) The solution? - Enter The Reverand Bayes! (priors, liklihood ratios, elicitation)
+5) Evidence based medicine and Critical appraisal
+6) Closing with reference to opening anecdote
+
+Datasets to use...
+
+Bio-related tests
+
+https://www.kaggle.com/uciml/pima-indians-diabetes-database
+https://www.kaggle.com/uciml/indian-liver-patient-records
+https://www.kaggle.com/kanncaa1/feature-selection-and-data-visualization
+
+Priors
+
+https://www.kaggle.com/rajanand/key-indicators-of-annual-health-survey
+https://www.kaggle.com/flaredown/flaredown-autoimmune-symptom-tracker
+
+
+-------------------
+
+Todo,
+
+- Brief intro to each dataset
+- Discussion of how the datasets obtained their outcomes

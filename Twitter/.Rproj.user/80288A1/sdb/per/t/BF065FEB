@@ -1,0 +1,18 @@
+{
+    "contents" : "tweets.all = read.csv('tweets_all.csv', stringsAsFactors = F)\n\nlibrary(lubridate)\nlibrary(ggplot2)\nlibrary(dplyr)\nlibrary(maptools)\nlibrary(animation) \n\ntweets.all$Date = sapply(strsplit(tweets.all$created_at, \" \"), \"[[\", 3)\ntweets.all$Date = paste(tweets.all$Date,\"-12-16\", sep = \"\")\ntweets.all$Time = sapply(strsplit(tweets.all$created_at, \" \"), \"[[\", 4)\ntweets.all$DateTime = paste(tweets.all$Date, tweets.all$Time)\ntweets.all$DateTime = as.POSIXct(tweets.all$DateTime, format = \"%d-%m-%y %H:%M:%S\")\ntweets.all$Time = as.POSIXct(tweets.all$Time, format = \"%H:%M:%S\")\n\ntweets.all.arranged = arrange(tweets.all, DateTime)\n\ntweets.all.arranged$Hour = hour(tweets.all.arranged$Time)\ntweets.all.arranged$Minute = minute(tweets.all.arranged$Time)\n\n\n#Create some time bins\n\nl = length(tweets.all.arranged$text)\nn = floor(l / 100)\n\ntweets.all.arranged$Time_bin = 100\n\nk = seq(0,l,n)\n\ni=1\n\nwhile (i<length(k)) {\n    \n    tweets.all.arranged$Time_bin[(k[i]:k[i+1])] = i\n    i=i+1\n    \n}\n\n\n\n#Get a world map,\ndata(wrld_simpl)\n\npar(mar = c(0,0,1,0),\n    pin = c(4,2),\n    pty = \"m\",\n    xaxs = \"i\",\n    xaxt = 'n',\n    xpd = FALSE,\n    yaxs = \"i\",\n    yaxt = 'n')\n\n\n\ni = 1\n\n#Loop through the rows and save the gif...\n\nsaveGIF(while (i <= length(table(tweets.all.arranged$Time_bin))) {\n    \n    plot(wrld_simpl, col='dark green', bg='white', border='black', ann=FALSE, axes = FALSE, main = \"Good morning, Twitter!\")\n    \n    points(tweets.all.arranged$place_lon[tweets.all.arranged$Time_bin == i], tweets.all.arranged$place_lat[tweets.all.arranged$Time_bin == i], pch = 16, col = 'red')\n\n    temp = tweets.all.arranged$DateTime[tweets.all.arranged$Time_bin == i][1]    \n    \n    text(-40,110, paste(\"Date/Time = \", temp, \" GMT\"), col = \"black\", cex = 1.2, font = 2)\n    \n    i = i+1\n    \n}, movie.name = \"goodmorning.gif\", img.name = \"Rplot\", interval = 0.1, convert = \"convert\", ani.width = 800, \nani.height = 800)\n",
+    "created" : 1481299298861.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4111279587",
+    "id" : "BF065FEB",
+    "lastKnownWriteTime" : 1481301604,
+    "path" : "C:/R/twitter_map.R",
+    "project_path" : null,
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

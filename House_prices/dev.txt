@@ -1,0 +1,14 @@
+Feature ideas
+
+1) Scaling! (check ranges on numerical inputs)
+2) 1stFlrSF + 2ndFlrSF
+3) Concatenate YrSold & MoSold as a data object
+4) Dates as factors
+
+
+
+02/11/16
+
+XGB (grid) all variables: 0.8872958
+
+XGB (grid) some new features, scaled, centred, boruta with tentative: 0.8968897

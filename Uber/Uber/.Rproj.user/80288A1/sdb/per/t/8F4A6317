@@ -1,0 +1,18 @@
+{
+    "contents" : "library('ggplot2')\nlibrary('animation')\n\nuber = read.csv('uber-raw-data-sep14.csv', stringsAsFactors = F)\n\nuber$Date = sapply(strsplit(uber$Date.Time, split = \" \"), function(x) x[[1]][1])\nuber$Date = as.Date(uber$Date, format = \"%m/%d/%Y\")\nuber = uber[order(uber$Date),]\n\nmin_lat <- min(uber$Lat)\nmax_lat <- max(uber$Lat)\nmin_long <- min(uber$Lon)\nmax_long <- max(uber$Lon)\n\nl = length(uber$Date.Time)\n\ni = 1\n\nsaveGIF(while (i <= l) {\n\n    print(m <- ggplot(data=uber[1:i,],aes(Lon[1:i],Lat[1:i])) + \n              geom_point(size=0.06, color=\"white\", alpha = 0.2) +\n              scale_x_continuous(limits=c(min_long, max_long)) +\n              scale_y_continuous(limits=c(min_lat, max_lat)) +\n              theme(panel.background = element_rect(fill = \"black\"),\n              panel.grid.major = element_blank(),\n              panel.grid.minor = element_blank()) +\n              annotate(\"text\", x =-73.0, y=41.2, label = uber$Date[i], colour = 'white', size = 8))\n\n    i = i+25000\n\n}, movie.name = \"uber.gif\", interval = 0.1, convert = \"convert\", ani.width = 800, \nani.height = 800)\n\n",
+    "created" : 1479299849318.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3871526321",
+    "id" : "8F4A6317",
+    "lastKnownWriteTime" : 1479465709,
+    "path" : "C:/Users/rob.harrand/Desktop/WORK/Kaggle/Uber/Uber/uber.R",
+    "project_path" : "uber.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

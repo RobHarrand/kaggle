@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "require(dplyr)\nrequire(ggplot2)\ncols <- rainbow(16, alpha=0.2)\n\naa_2015 = read.csv('AA_2015.csv', stringsAsFactors = F)\naa_2016 = read.csv('AA_2016.csv', stringsAsFactors = F)\naa_2017 = read.csv('AA_2017.csv', stringsAsFactors = F)\n\ndt = rbind(aa_2015,aa_2016,aa_2017)\n\nby_month = dt %>%\n  group_by(Month.of.Incident) %>%\n  summarize(mean_victims = mean(number_of_victims, na.rm = TRUE))\n\nggplot(by_month, aes(x=Month.of.Incident, y=mean_victims, fill=Month.of.Incident))+\n  geom_bar(stat=\"identity\", color=\"black\")+\n  scale_fill_manual(values=c(cols))+\n  theme_minimal()\n\n\nby_cow = dt %>%\n  group_by(cow_related_violence) %>%\n  summarize(mean_victims = mean(number_of_victims, na.rm = TRUE))\n\nggplot(by_cow, aes(x=cow_related_violence, y=mean_victims, fill=cow_related_violence))+\n  geom_bar(stat=\"identity\", color=\"black\")+\n  scale_fill_manual(values=c(cols))+\n  theme_minimal()\n\n\n\nby_party = dt %>%\n  group_by(party_in_power) %>%\n  summarize(mean_victims = mean(number_of_victims, na.rm = TRUE))\n\nggplot(by_party, aes(x=party_in_power, y=mean_victims, fill=party_in_power))+\n  geom_bar(stat=\"identity\", color=\"black\")+\n  scale_fill_manual(values=c(cols))+\n  theme_minimal()\n\n\n\n\n\nmuslim = data.frame(number_of_victims = dt$number_of_victims[dt$identity_muslim == 'Yes'], rel = 'muslim')\nchristian = data.frame(number_of_victims = dt$number_of_victims[dt$identity_christian == 'Yes'], rel = 'christian')\ndalit = data.frame(number_of_victims = dt$number_of_victims[dt$identity_dalit == 'Yes'], rel = 'dalit')\n\nby_rel_no = rbind(muslim,christian,dalit)\n\nboxplot(number_of_victims ~ rel, data = by_rel_no)\n\n\n\nmuslim = data.frame(victim_ages = dt$victim_ages[dt$identity_muslim == 'Yes'], rel = 'muslim')\nchristian = data.frame(victim_ages = dt$victim_ages[dt$identity_christian == 'Yes'], rel = 'christian')\ndalit = data.frame(victim_ages = dt$victim_ages[dt$identity_dalit == 'Yes'], rel = 'dalit')\n\nby_rel_age = rbind(muslim,christian,dalit)\n\nboxplot(victim_ages ~ rel, data = by_rel_age)\n\n\n\n\n\nplot(dt$longitude, dt$latitude)\n\n\n\ntable(dt$state)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+    "created" : 1521122147903.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "12086747",
+    "id" : "E09519CE",
+    "lastKnownWriteTime" : 1521132905,
+    "last_content_update" : 1521132905433,
+    "path" : "C:/Users/rob.harrand/Desktop/WORK/Data hobbies/Kaggle/My data submissions/Halt the Hate - AA/halt the hate.R",
+    "project_path" : "halt the hate.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

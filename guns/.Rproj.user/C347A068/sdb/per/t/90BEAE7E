@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library('ggplot2')\nlibrary('animation')\n\ndt = read.csv('guns.csv')\n\n#dt$Date = sapply(strsplit(dt$Date.Time, split = \" \"), function(x) x[[1]][1])\ndt$Date = as.Date(dt$Date, format = \"%m/%d/%Y\")\ndt = dt[order(dt$Date),]\n\nmin_lat <- min(dt$Latitude, na.rm = T)\nmax_lat <- max(dt$Latitude, na.rm = T)\nmin_long <- min(dt$Longitude, na.rm = T)\nmax_long <- max(dt$Longitude, na.rm = T)\n\nl = length(dt$Date)\n\ni = 1\n\nsaveGIF(while (i <= l) {\n  \n  print(m <- ggplot(data=dt[1:i,],aes(Longitude[1:i],Latitude[1:i],size=(Fatalities[1:i]+1)*2,color=\"red\", alpha = 1)) + \n          geom_point() +\n          scale_x_continuous(limits=c(min_long, max_long)) +\n          scale_y_continuous(limits=c(min_lat, max_lat)) +\n          theme(panel.background = element_rect(fill = \"black\"),\n                panel.grid.major = element_blank(),\n                panel.grid.minor = element_blank()) +\n          xlab('Longitute') +\n          ylab('Latitude') +\n          annotate(\"text\", x =0, y=58, label = dt$Date[i], colour = 'white', size = 8)+\n          annotate(\"text\", x =-3, y=60, label = '2016 UK Cycling Collisions', colour = 'white', size = 9)+\n          annotate(\"text\", x =0.5, y=50.3, label = 'STATS19 data from data.gov.uk', colour = 'white', size = 7)+\n          annotate(\"text\", x =0.5, y=50, label = '(open government licence)', colour = 'white', size = 7))\n  \n  \n  \n  i = i+5\n  \n}, movie.name = \"mass_shootings_us.gif\", interval = 0.01, convert = \"convert\", ani.width = 1000, \nani.height = 1000)\n",
+    "created" : 1507204755708.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3206068350",
+    "id" : "90BEAE7E",
+    "lastKnownWriteTime" : 1507207520,
+    "last_content_update" : 1507207520529,
+    "path" : "C:/Users/rob.harrand/Desktop/WORK/Data hobbies/guns/guns.R",
+    "project_path" : "guns.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,17 @@
+{
+    "contents" : "library('ggplot2')\nlibrary('animation')\ninstall.packages('maps', dependencies = T)\n\ndf = read.csv('hail-2015.csv', stringsAsFactors = F)\n\ndf$WSR_ID = NULL\ndf$CELL_ID = NULL\ndf$RANGE = NULL\ndf$AZIMUTH = NULL\ndf$PROB = NULL\n\n\nex = ((df$SEVPROB == -999) | (df$SEVPROB == 0))\ndf = df[!ex,]\n\n\ndf$Month = substr(df$X.ZTIME, 5,6)\ndf$Day = substr(df$X.ZTIME, 7,8)\ndf$X.ZTIME = NULL\nrm(ex)\n\nsave(df, file = 'hail_small.RData')\n\n\n\n#df_agg = aggregate(. ~ Month + Day, data=df, mean, na.rm=TRUE)\n\n\n\ndf_sample = df[sample(nrow(df), 10000), ]\n\nqplot(df_sample$LON, df_sample$LAT, size = df_sample$MAXSIZE, alpha = (100-df_sample$SEVPROB)/100)\n\n\n#Load the map data,\ns <- map_data(\"world\")\n\n#Set everywhere to green,\ns$colour = \"light green\"\n\n#Change a few obvious ones,\ns$colour[s$region == \"Antarctica\"] = \"white\"\ns$colour[s$region == \"Greenland\"] = \"white\"\n\ndf_sample$Month = as.numeric(df_sample$Month)\n\n#Set the viewing position from the spline,        \norient_x = 40\norient_y = -100\n\n\n\ni = 1\n\nsaveGIF(while (i <= 12) {\n\nprint(m <- ggplot(data = s, aes(x=long, y=lat, group=group)) + #Set ggplot2\n  \n  geom_path(data = s, aes(x=long, y=lat), colour=\"black\") + #Plot the Earth\n  \n  geom_polygon(fill=s$colour, colour=\"black\") + #Colour the countries\n  \n  theme(panel.grid.major = element_line(colour = \"black\")) + #Make the grid-lines black\n  \n  coord_map(\"ortho\", orientation=c(orient_x,orient_y,0)) +\n  \n  geom_point(inherit.aes=FALSE, data = df_sample[df_sample$Month == 0+1,], colour = 'red', \n             aes(x=LON, y=LAT, alpha = 100-SEVPROB, size = MAXSIZE))\n\n)\n\ni = i+1\n\n}, movie.name = \"hail3D.gif\", interval = 0.1, convert = \"convert\", ani.width = 800, \nani.height = 800)\n",
+    "created" : 1480938291920.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "892770669",
+    "id" : "A01284B",
+    "lastKnownWriteTime" : 1480884615,
+    "path" : "C:/Users/rob.harrand/Desktop/WORK/Kaggle/Hail/hail.R",
+    "project_path" : "hail.R",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

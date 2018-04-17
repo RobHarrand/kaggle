@@ -1,0 +1,18 @@
+{
+    "contents" : "library('animation')\nlibrary('scatterplot3d')\n\nexo = read.csv('oec.csv')\n\n#Get rid of planets with missing data...\nex = is.na(exo$RightAscension) | is.na(exo$Declination) | is.na(exo$DistFromSunParsec) | is.na(exo$RadiusJpt)\nexo = exo[!ex,]\n\n#Get rid of the planets with really extreme distances or sizes (purely for aesthetic reasons)...\nexo = exo[exo$DistFromSunParsec < 2000,]\nexo = exo[exo$RadiusJpt < 6,]\n\n#Change to characters...\nexo$RightAscension = as.character(exo$RightAscension)\nexo$Declination = as.character(exo$Declination)\n\n\n#Strip out relevant data and convert from RA and declination to cartesian coordiates...\n#Conversion taken from http://fmwriters.com/Visionback/Issue14/wbputtingstars.htm\n\ni=1\nexo$A = 0\n\nwhile (i<length(exo$RightAscension)) {\n\n    temp = strsplit(exo$RightAscension, split = \" \")[[i]]\n    temp_d = strsplit(exo$Declination, split = \" \")[[i]]\n    exo$A[i] = (as.numeric(temp[1])*15) + (as.numeric(temp[2])*0.25) + (as.numeric(temp[3])*0.004166)\n    exo$B[i] = (abs(as.numeric(temp_d[1])) + (as.numeric(temp_d[2])/60) + (as.numeric(temp_d[3])/3600)) * sign(as.numeric(temp_d[1]))\n    exo$X[i] = (exo$DistFromSunParsec[i] * cos(exo$B[i])) * cos(exo$A[i])\n    exo$Y[i] = (exo$DistFromSunParsec[i] * cos(exo$B[i])) * sin(exo$A[i])\n    exo$Z[i] = exo$DistFromSunParsec[i] * sin(exo$B[i])\n    \n    i=i+1\n    \n}\n\n\n#Plot the scatterplot and produce an animation (changing the angle with each image)...\n\ny=0\n\nsaveGIF(while (y < 360) {\n    \n    scatterplot3d(exo$X, exo$Y, exo$Z, pch=16, \n                         highlight.3d=TRUE, \n                         type=\"p\", \n                         main=\"Local Neighbourhood\", \n                         axis = F,\n                         grid = F,\n                         box = T,\n                         angle = y, \n                         cex.symbols = exo$RadiusJpt)\n    \n    y=y+1\n\n}, movie.name = \"exo.gif\", interval = 0.1, convert = \"convert\", ani.width = 800, \nani.height = 800)",
+    "created" : 1473683570136.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1665151704",
+    "id" : "D63A179E",
+    "lastKnownWriteTime" : 1473692476,
+    "path" : "C:/Users/rob.harrand/Desktop/WORK/Kaggle/Exoplanets/exo.R",
+    "project_path" : "exo.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

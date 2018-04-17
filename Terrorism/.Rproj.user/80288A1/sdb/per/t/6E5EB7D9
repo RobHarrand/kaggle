@@ -1,0 +1,18 @@
+{
+    "contents" : "library('ggplot2')\nlibrary('animation')\n\nterror = read.csv('terror.csv', stringsAsFactors = F)\n\nmin_lat <- min(terror$latitude, na.rm = T)\nmax_lat <- max(terror$latitude, na.rm = T)\nmin_long <- min(terror$longitude, na.rm = T)\nmax_long <- max(terror$longitude, na.rm = T)\n\n#Load the map data,\ns <- map_data(\"world\")\n\n#Set everywhere to green,\ns$colour = \"dark green\"\n\n#Change a few obvious ones,\ns$colour[s$region == \"Antarctica\"] = \"white\"\ns$colour[s$region == \"Greenland\"] = \"white\"\ns$colour[s$region == \"Morocco\"] = \"orange\"\ns$colour[s$region == \"Algeria\"] = \"orange\"\ns$colour[s$region == \"Tunisia\"] = \"orange\"\ns$colour[s$region == \"Libya\"] = \"orange\"\ns$colour[s$region == \"Egypt\"] = \"orange\"\ns$colour[s$region == \"Saudi Arabia\"] = \"orange\"\ns$colour[s$region == \"Australia\"] = \"orange\"\ns$colour[s$region == \"Mongolia\"] = \"orange\"\n\n\nx = densCols(terror$latitude, terror$longitude)\n\nterror$dens <- col2rgb(x)[1,] + 1L\n\ncols = colorRampPalette(c('red', 'yellow', 'blue'))(256)\n\nterror$col <- cols[terror$dens]\n\n\n\n\n\n\n# Start the clock!\nptm <- proc.time()\n\n\n#Set a counter,\nl = length(terror$eventid)\n\ni = 1\nj = 0\n\nsaveGIF(while (i < l) {\n    \n    #Set the viewing position from the spline,        \n    orient_x = 20\n    orient_y = -40\n    \n    #Let's plot this beast!\n    print(\n        \n        m <- ggplot(data = s, aes(x=long, y=lat, group=group)) + #Set ggplot2\n            \n            geom_path(data = s, aes(x=long, y=lat), colour=\"black\") + #Plot the Earth\n            \n            geom_polygon(fill=s$colour, colour=\"black\") + #Colour the countries\n            \n            theme(panel.grid.major = element_line(colour = \"black\")) + #Make the grid-lines black\n            \n            coord_map(\"ortho\", orientation=c(orient_x,orient_y+j,0)) +\n            \n            geom_point(inherit.aes=FALSE, data = terror[1:i,], size = 2, colour = terror$col[1:i], \n                       aes(x=longitude[1:i], y=latitude[1:i]), alpha = 0.2) +\n            \n            annotate(\"text\", x =-45, y = -10, label = terror$eventid.1[i], colour = 'red', size = 10, fontface =2) + \n            \n            annotate(\"text\", x =-45, y = -20, label = paste('No. of incidents: ', i, sep = ''), colour = 'red', size = 8, fontface = 2)\n    )\n    \n    i = i+1500\n    j = j+0.2\n    \n}, movie.name = \"Terror3D.gif\", interval = 0.1, convert = \"convert\", ani.width = 800, \nani.height = 800)\n\n\n# Stop the clock\nproc.time() - ptm\n",
+    "created" : 1479473342644.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "646001842",
+    "id" : "6E5EB7D9",
+    "lastKnownWriteTime" : 1479478836,
+    "path" : "C:/Users/rob.harrand/Desktop/WORK/Kaggle/Terrorism/terror.R",
+    "project_path" : "terror.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

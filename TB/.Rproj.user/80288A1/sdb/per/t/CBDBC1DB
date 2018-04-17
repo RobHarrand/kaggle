@@ -1,0 +1,25 @@
+{
+    "contents" : "",
+    "created" : 1470730395453.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "CBDBC1DB",
+    "lastKnownWriteTime" : 7011605692497750387,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "yr9cn6063c",
+        "caption" : "c_check",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=c_check&cache_key=yr9cn6063c",
+        "displayedObservations" : 67,
+        "environment" : "",
+        "object" : "c_check",
+        "totalObservations" : 67,
+        "variables" : 3
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "type" : "r_dataframe"
+}

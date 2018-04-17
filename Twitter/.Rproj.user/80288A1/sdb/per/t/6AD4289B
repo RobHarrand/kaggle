@@ -1,0 +1,18 @@
+{
+    "contents" : "#set.seed(1)\n#x = rnorm(n=100000, mean=10, sd=3.9)\n#y = rnorm(n=100000, mean=20, sd=9.9)\n\n#plot(density(x), xlim = c(0,50), main = 'Basson et al data')\ncurve(dnorm(x,10,3.9),xlim = c(0,50), main = 'Basson et al data') \ncurve(dnorm(x,20,9.9), col = 'red', add = T)\nlegend(20,0.08,c(\"Control\", \"Treatment\", \"Control 95% percentile\"), lty=c(1,1,3), bty = \"n\", lwd=c(2.5,2.5),col=c(\"black\",\"red\",\"black\"))\n\nc95 = (1.65 * 3.9) + 10\nabline(v=c95, lty = 'dotted')\n\n\n\n# cord.x <- seq(0,c95,0.01)\n# cord.y <- c(dnorm(seq(0,c95,0.01),10,3.9))\n# \n# shade.norm.density(0, 1, 1, 2, 'darkblue', 45)\n# \n# curve(dnorm(x,10,3.9),xlim = c(0,50), main = 'Basson et al data') \n# polygon(cord.x,cord.y,col='skyblue')\n# \n# ?polygon\n# \n# ?dnorm\n\n#set.seed(1)\n#x = rnorm(n=100000, mean=3.9, sd=11.6)\n#y = rnorm(n=100000, mean=40.7, sd=117.9)\n\ncurve(dnorm(x,3.9,11.6), xlim = c(-60,170), main = 'Kanda et al data')\ncurve(dnorm(x,40.7,117.9), col = 'red', add = T)\nlegend(30,0.03,c(\"No ischemia\", \"Small bowel ischemia\", \"No ischemia \\n95% percentile\"), bty = \"n\", lty=c(1,1,3), lwd=c(2.5,2.5),col=c(\"black\",\"red\",\"black\"))\n\nc95 = (1.65 * 11.6) + 3.9\nabline(v=c95, lty = 'dotted')\n",
+    "created" : 1485266022658.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2235942737",
+    "id" : "6AD4289B",
+    "lastKnownWriteTime" : 1485276975,
+    "path" : "C:/R Algorithms/power plots.R",
+    "project_path" : null,
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

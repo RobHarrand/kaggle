@@ -1,0 +1,49 @@
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="generator" content="R package animation 2.4">
+	<title>Animations Using the R Language</title>
+	<link rel="stylesheet" href="css/reset.css" />
+	<link rel="stylesheet" href="css/styles.css" />
+	<link rel="stylesheet" href="css/scianimator.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/styles/github.min.css">
+
+	<script src="js/jquery-1.4.4.min.js"></script>
+	<script src="js/jquery.scianimator.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/highlight.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/languages/r.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+</head>
+<body>
+
+	<div class="scianimator"><div id="Rplot" style="display: inline-block;"></div></div>
+	<div class="scianimator" style="width: 480px; text-align: left"><pre><code class="r">## Animations generated in R version 3.2.2 (2015-08-14)
+##   using the package animation
+library(animation)
+library(maptools)
+library(sp)
+while (i < length(cook$Lat3 + 1)) {
+    plot(wrld_simpl, col = "dark green", bg = "light blue", border = "black", 
+        ann = FALSE, axes = FALSE, main = "Voyages of James Cook")
+    points(cook$Lon3[i], cook$Lat3[i], col = "yellow", pch = 17, 
+        cex = 1)
+    text(0, 110, paste("Date: ", cook$Day[i], "/", cook$Month[i], 
+        "/", cook$Year[i]), col = "black", cex = 0.7, font = 2)
+    text(0, 103, cook$Clearness[i], col = "red", cex = 0.7, font = 2)
+    text(0, 97, cook$AllWindForces[i], col = "red", cex = 0.7, 
+        font = 2)
+    text(0, 91, cook$PrecipitationDescriptor[i], col = "red", 
+        cex = 0.7, font = 2)
+    ani.pause()
+    rect(-160, 85, 160, 119, col = "light blue", border = NA)
+    i = i + 1
+}
+## R version 3.2.2 (2015-08-14)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Other packages: animation 2.4, maptools 0.8-37, sp 1.2-1</code></pre></div>
+	<script src="js/Rplot.js"></script>
+<!-- highlight R code -->
+
+</body>
+</html>

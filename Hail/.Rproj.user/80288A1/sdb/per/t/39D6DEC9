@@ -1,0 +1,18 @@
+{
+    "contents" : "library(leaflet)\n\ndf = read.csv('hail-2015.csv', stringsAsFactors = F)\n\ndf$WSR_ID = NULL\ndf$CELL_ID = NULL\ndf$RANGE = NULL\ndf$AZIMUTH = NULL\ndf$SEVPROB = NULL\n\nex = (df$PROB == -999)\ndf = df[!ex,]\n\ndf$Month = substr(df$X.ZTIME, 5,6)\ndf$Day = substr(df$X.ZTIME, 7,8)\ndf$X.ZTIME = NULL\ndf$Month = as.numeric(df$Month)\ndf$Day = as.numeric(df$Day)\ndf$Month_name = month.abb[df$Month]\ndf$MAXSIZE = as.factor(df$MAXSIZE)\ndf$Size_bins[df$MAXSIZE %in% c(0.5,0.75,1,1.25,1.5,1.75)] = 'Small'\ndf$Size_bins[df$MAXSIZE %in% c(2,2.25,2.5,2.75,3)] = 'Medium'\ndf$Size_bins[df$MAXSIZE %in% c(3.25,3.5, 3.75,4)] = 'Buy a really good hat'\ndf$Size_bins = as.factor(df$Size_bins)\n\n\ndf_sample = df[df$MAXSIZE == 4,]\n\n\nbighail <- leaflet(df_sample) %>%\n  setView(-98, 40, zoom = 4) %>%\n  addTiles() %>%\n  addMarkers(~LON, ~LAT, popup=~PROB, \n             clusterOptions = markerClusterOptions(), \n             options = popupOptions(closeButton = TRUE))\n\n\nbighail\n",
+    "created" : 1481027891200.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3122625991",
+    "id" : "39D6DEC9",
+    "lastKnownWriteTime" : 1481032830,
+    "path" : "C:/Users/rob.harrand/Desktop/WORK/Kaggle/Hail/hail_leaflet.R",
+    "project_path" : "hail_leaflet.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

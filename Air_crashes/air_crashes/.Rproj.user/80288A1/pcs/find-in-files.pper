@@ -1,0 +1,10 @@
+{
+    "dialog-state" : {
+        "caseSensitive" : false,
+        "filePatterns" : [
+        ],
+        "path" : "C:/R Algorithms/RH cPAN/Scripts",
+        "query" : "plotly",
+        "regex" : false
+    }
+}

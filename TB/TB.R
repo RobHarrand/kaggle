@@ -1,0 +1,173 @@
+tb_1 = read.csv('tubercolusis_from 2007_WHO.csv')
+#tb_2 = read.csv('tuberculosis_data_WHO.csv')
+
+tb_1 = read.csv(/input/tubercolusis_from 2007_WHO.csv)
+
+#require('stringr')
+require('ggplot2')
+require('animation')
+#require('maptools')
+require('grid')
+
+
+#Load the map data,
+s = map_data("world")
+
+
+tb_1$Number.of.deaths.due.to.tuberculosis..excluding.HIV = as.character(tb_1$Number.of.deaths.due.to.tuberculosis..excluding.HIV)
+tb_1$Number.of.deaths.due.to.tuberculosis..excluding.HIV = gsub(" ", "", tb_1$Number.of.deaths.due.to.tuberculosis..excluding.HIV)
+tb_1$Number.of.deaths.due.to.tuberculosis..excluding.HIV = as.numeric(tb_1$Number.of.deaths.due.to.tuberculosis..excluding.HIV)
+
+
+
+
+
+t = as.data.frame(table(tb_1$Country))
+
+ex = (t$Var1 == 'South Sudan')
+t = t[!ex,]
+
+
+
+t$y_2007 = 0
+t$y_2008 = 0
+t$y_2009 = 0
+t$y_2010 = 0
+t$y_2011 = 0
+t$y_2012 = 0
+t$y_2013 = 0
+t$y_2014 = 0
+
+i=1
+
+while (i<=length(t$Var1)) {
+
+t[i,3] = tb_1$Number.of.deaths.due.to.tuberculosis..excluding.HIV[tb_1$Country == t[i,1] & tb_1$Year == 2007]
+t[i,4] = tb_1$Number.of.deaths.due.to.tuberculosis..excluding.HIV[tb_1$Country == t[i,1] & tb_1$Year == 2008]
+t[i,5] = tb_1$Number.of.deaths.due.to.tuberculosis..excluding.HIV[tb_1$Country == t[i,1] & tb_1$Year == 2009]
+t[i,6] = tb_1$Number.of.deaths.due.to.tuberculosis..excluding.HIV[tb_1$Country == t[i,1] & tb_1$Year == 2010]
+t[i,7] = tb_1$Number.of.deaths.due.to.tuberculosis..excluding.HIV[tb_1$Country == t[i,1] & tb_1$Year == 2011]
+t[i,8] = tb_1$Number.of.deaths.due.to.tuberculosis..excluding.HIV[tb_1$Country == t[i,1] & tb_1$Year == 2012]
+t[i,9] = tb_1$Number.of.deaths.due.to.tuberculosis..excluding.HIV[tb_1$Country == t[i,1] & tb_1$Year == 2013]
+t[i,10] = tb_1$Number.of.deaths.due.to.tuberculosis..excluding.HIV[tb_1$Country == t[i,1] & tb_1$Year == 2014]
+
+i=i+1
+
+}
+
+ex = (t$y_2007 < 1000)
+t = t[!ex,]
+
+#Loop through the rows and save the gif...
+
+
+
+z=1
+
+c_check = data.frame(t$Var1)
+c_check$False = 0
+c_check$True = 0
+
+while (z <= length(t$Var1)) {
+  
+  temp = as.data.frame(table(s$region == t[z,1]))
+  c_check[z,2] = temp[1,2]
+  c_check[z,3] = temp[2,2]
+  z=z+1  
+  
+}
+
+
+
+
+
+
+t$Var1 = as.character(t$Var1)
+
+t$Var1[t$Var1 == 'Congo'] = 'Republic of Congo'
+t$Var1[t$Var1 == 'Cote d\'Ivoire'] = 'Ivory Coast'
+t$Var1[t$Var1 == 'Democratic People\'s Republic of Korea'] = 'North Korea'
+t$Var1[t$Var1 == 'Iran (Islamic Republic of)'] = 'Iran'
+t$Var1[t$Var1 == 'Lao People\'s Democratic Republic'] = 'Laos'
+t$Var1[t$Var1 == 'Russian Federation'] = 'Russia'
+t$Var1[t$Var1 == 'United Republic of Tanzania'] = 'Tanzania'
+t$Var1[t$Var1 == 'Viet Nam'] = 'VietNam'
+
+tb_1$Country = as.character(tb_1$Country)
+
+tb_1$Country[tb_1$Country == 'Congo'] = 'Republic of Congo'
+tb_1$Country[tb_1$Country == 'Cote d\'Ivoire'] = 'Ivory Coast'
+tb_1$Country[tb_1$Country == 'Democratic People\'s Republic of Korea'] = 'North Korea'
+tb_1$Country[tb_1$Country == 'Iran (Islamic Republic of)'] = 'Iran'
+tb_1$Country[tb_1$Country == 'Lao People\'s Democratic Republic'] = 'Laos'
+tb_1$Country[tb_1$Country == 'Russian Federation'] = 'Russia'
+tb_1$Country[tb_1$Country == 'United Republic of Tanzania'] = 'Tanzania'
+tb_1$Country[tb_1$Country == 'Viet Nam'] = 'VietNam'
+
+
+
+
+i=1
+
+while (i<=length(t$Var1)) {
+  
+  t[i,10] = ((t[i,10] - t[i,3]) / t[i,3]) * 100
+  t[i,9] = ((t[i,9] - t[i,3]) / t[i,3]) * 100
+  t[i,8] = ((t[i,8] - t[i,3]) / t[i,3]) * 100
+  t[i,7] = ((t[i,7] - t[i,3]) / t[i,3]) * 100
+  t[i,6] = ((t[i,6] - t[i,3]) / t[i,3]) * 100
+  t[i,5] = ((t[i,5] - t[i,3]) / t[i,3]) * 100
+  t[i,4] = ((t[i,4] - t[i,3]) / t[i,3]) * 100
+  t[i,3] = ((t[i,3] - t[i,3]) / t[i,3]) * 100
+  
+  i=i+1
+  
+}
+
+
+
+
+
+
+
+
+
+g <- rasterGrob(blues9, width=unit(1,"npc"), height = unit(1,"npc"), 
+                interpolate = TRUE) 
+
+
+i=1
+
+saveGIF(while (i<=8) {
+
+  y=1
+  
+  while (y<=length(t$Var1)) {
+    
+    s$colour[t[y,1] == s$region] = (t[y,i+2])
+    y=y+1
+  }
+    
+  print(m <- ggplot(s, aes(x=long, y=lat, group=group, fill=colour)) + #Set ggplot2
+          
+          annotation_custom(g, xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf) +
+          
+          geom_polygon(alpha=1) + #Set transparency
+          
+          geom_path(data = s, aes(x=long, y=lat, group=group), colour="black") + #Plot the Earth
+          
+          scale_fill_gradient(low = "green", high = "red", guide = "colourbar", limits=c(-77,77)) + #Set the colours,
+                                
+          theme(plot.title = element_text(size = rel(2)),
+                panel.grid.major = element_blank(), panel.grid.minor = element_blank()) + #Change the text size,
+          
+          ggtitle(paste("The Spread of TB: ", 2006+i)))
+  
+  ani.pause()
+  
+  i=i+1
+  
+}, movie.name = "tb_ani.gif", interval = 1.5, convert = "convert", ani.width = 800, 
+ani.height = 560)
+
+
